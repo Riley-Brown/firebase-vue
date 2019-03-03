@@ -25,6 +25,14 @@ export default {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           console.log(doc.data());
+          const data = {
+            id: doc.id,
+            employee_id: doc.data().employee_id,
+            name: doc.data().name,
+            dept: doc.data().dept,
+            position: doc.data().position
+          };
+          this.employees.push(data);
         });
       });
   }
