@@ -7,6 +7,11 @@
       <li v-for="employee in employees" v-bind:key="employee.id" class="collection-item">
         <div class="chip">{{employee.dept}}</div>
         {{employee.employee_id}}: {{employee.name}}
+        <router-link
+          v-bind:to="{name: 'view-employee', params: {employee_id: employee.employee_id}}"
+        >
+          <i class="fa fa-eye"></i>
+        </router-link>
       </li>
     </ul>
 
