@@ -35,10 +35,31 @@
 </template>
 
 <script>
+import db from "./firebaseInit";
 export default {
   name: "new-employee",
   data() {
-    return {};
+    return {
+      employee_id: null,
+      name: null,
+      dept: null,
+      position: null
+    };
+  },
+  methods: {
+    saveEmployee() {
+      db.collection("employees")
+        .add({
+          employee_id: this.employee_id,
+          name: this.name,
+          dept: this.dept,
+          position: this.position
+        })
+        .then(docRef => {
+          this.$router.push("/");
+        })
+        .catch(err => console.log(err));
+    }
   }
 };
 </script>
