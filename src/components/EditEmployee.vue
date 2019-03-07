@@ -5,7 +5,7 @@
       <form @submit.prevent="updateEmployee" class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <input type="text" v-model="employee_id" required>
+            <input type="text" disabled v-model="employee_id" required>
           </div>
         </div>
         <div class="row">
@@ -74,7 +74,28 @@ export default {
           });
         });
     },
-    upDateEmployee() {}
+    updateEmployee() {
+      db.collection("employees")
+        .where("employee_id", "==", this.$route.params.employee_id)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            doc.ref
+              .update({
+                employee_id: this.employee_id,
+                name: this.name,
+                dept: this.dept,
+                position: this.position
+              })
+              .then(() => {
+                this.$router.push({
+                  name: "view-employee",
+                  params: { employee_id: this.employee_id }
+                });
+              });
+          });
+        });
+    }
   }
 };
 </script>
